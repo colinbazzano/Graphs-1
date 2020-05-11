@@ -120,6 +120,23 @@ class Graph:
         depth-first order.
         """
         stack = Stack()  # create a stack
+        visited = set()
+        path = [starting_vertex]
+        # add path to the stack (first time through its the starting vert)
+        stack.push(path)
+
+        while stack.size() > 0:
+            path = stack.pop()  # pop item off the stack
+            vertex = path[-1]
+
+            if vertex == destination_vertex:
+                return path
+            if vertex not in visited:
+                visited.add(vertex)
+                for neighbor in self.get_neighbors(vertex):
+                    new_path = path[:]
+                    new_path.append(neighbor)
+                    stack.push(new_path)
 
     def dfs_recursive(self, starting_vertex, destination_vertex):
         """
