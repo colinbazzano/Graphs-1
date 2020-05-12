@@ -89,6 +89,49 @@ class Graph:
         visited = set()
         dft_helper(starting_vertex, visited)
 
+    def dfs_recursive_lecture(self, start_vert, target_value, visited=None, path=None):
+        print("DFS RECURSIVE:", start_vert)
+
+        if visited is None:
+            visited = set()
+
+        if path is None:
+            path = []
+
+        visited.add(start_vert)
+
+        # Make a copy of the list, adding the new vert on
+        path = path + [start_vert]  # list concat, BUT MAKES A NEW LIST
+
+        # base case
+        if start_vert == target_value:
+            return path  # comes back up through the stack when this is called
+
+        for child_vert in self.vertices[start_vert]:
+            if child_vert not in visited:
+                new_path = self.dfs_recursive_lecture(
+                    child_vert, target_value, visited, path)
+
+                if new_path:
+                    return new_path
+
+        return None
+        # explore
+        # print this node
+        # explore all of its unvisited neighbors
+        # return
+
+    def dft_recursive_lecture(self, start_vert, visited=None):
+        print(start_vert)
+        if visited is None:
+            visited = set()
+
+        visited.add(start_vert)
+
+        for child_vert in self.vertices[start_vert]:
+            if child_vert not in visited:
+                self.dft_recursive_lecture(child_vert, visited)
+
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
